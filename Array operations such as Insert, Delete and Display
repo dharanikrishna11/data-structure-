@@ -1,0 +1,100 @@
+#include <stdio.h>
+
+// Function to display the elements of the array
+void display(int arr[], int size) {
+    printf("Array: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+// Function to insert an element at a specified position
+int insert(int arr[], int size, int pos, int element) {
+    if (pos < 0 || pos > size) {
+        printf("Invalid position for insertion.\n");
+        return size;
+    }
+
+    for (int i = size; i > pos; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[pos] = element;
+
+    return size + 1;
+}
+
+// Function to delete an element from a specified position
+int deleteElement(int arr[], int size, int pos) {
+    if (pos < 0 || pos >= size) {
+        printf("Invalid position for deletion.\n");
+        return size;
+    }
+
+    for (int i = pos; i < size - 1; i++) {
+        arr[i] = arr[i + 1];
+    }
+
+    return size - 1;
+}
+
+int main() {
+    int arr[50]; // Maximum array size of 50
+    int size = 0; // Current number of elements in the array
+
+    int choice;
+    do {
+        printf("\nArray Operations:\n");
+        printf("1. Insert\n");
+        printf("2. Delete\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                if (size >= 50) {
+                    printf("Array is full, cannot insert more elements.\n");
+                } else {
+                    int pos, element;
+                    printf("Enter position for insertion: ");
+                    scanf("%d", &pos);
+                    printf("Enter element to insert: ");
+                    scanf("%d", &element);
+                    size = insert(arr, size, pos, element);
+                    display(arr, size);
+                }
+                break;
+
+            case 2:
+                if (size <= 0) {
+                    printf("Array is empty, cannot delete elements.\n");
+                } else {
+                    int pos;
+                    printf("Enter position for deletion: ");
+                    scanf("%d", &pos);
+                    size = deleteElement(arr, size, pos);
+                    display(arr, size);
+                }
+                break;
+
+            case 3:
+                if (size <= 0) {
+                    printf("Array is empty.\n");
+                } else {
+                    display(arr, size);
+                }
+                break;
+
+            case 4:
+                printf("Exiting the program.\n");
+                break;
+
+            default:
+                printf("Invalid choice. Please enter a valid option.\n");
+        }
+    } while (choice != 4);
+
+    return 0;
+}

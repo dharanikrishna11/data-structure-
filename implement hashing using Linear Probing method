@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 10
+
+// Hash Table structure
+struct HashTable {
+    int* array;
+    int size;
+};
+
+// Initialize the hash table
+struct HashTable* initHashTable(int size) {
+    struct HashTable* table = (struct HashTable*)malloc(sizeof(struct HashTable));
+    table->size = size;
+    table->array = (int*)malloc(sizeof(int) * size);
+    for (int i = 0; i < size; ++i) {
+        table->array[i] = -1; // Initialize all slots as -1 (indicating empty)
+    }
+    return table;
+}
+
+// Hashing function
+int hash(int key, int size) {
+    return key % size;
+}
+
+// Insert key into hash table using linear probing
+void insert(struct HashTable* table, int key) {
+    int index = hash(key, table->size);
+    while (table->array[index] != -1) {
+        index = (index + 1) % table->size; // Linear probing to find next available slot
+    }
+    table->array[index] = key;
+}
+
+// Print the hash table
+void printHashTable(struct HashTable* table) {
+    printf("Hash Table:\n");
+    for (int i = 0; i < table->size; ++i) {
+        printf("%d -> %d\n", i, table->array[i]);
+    }
+}
+
+int main() {
+    struct HashTable* table = initHashTable(SIZE);
+
+    // Insert some keys
+    insert(table, 5);
+    insert(table, 15);
+    insert(table, 25);
+    insert(table, 7);
+    insert(table, 17);
+
+    // Print the hash table
+    printHashTable(table);
+
+    free(table->array);
+    free(table);
+
+    return 0;
+}

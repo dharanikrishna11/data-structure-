@@ -3,8 +3,6 @@
 #include <ctype.h>
 
 #define MAX_SIZE 100
-
-// Stack implementation
 struct Stack {
     int top;
     char items[MAX_SIZE];
